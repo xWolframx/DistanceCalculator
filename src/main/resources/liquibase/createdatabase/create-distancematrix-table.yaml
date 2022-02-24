@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-distancematrix-table
+      author: EgorKulizhnyh
+      changes:
+        - tagDatabase:
+            - tag: create_distancematrix_table
+        - createTable:
+            tableName: distance_matrix
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: matrix
+                  type: blob
+
+      rollback:
+        - dropTable:
+            tableName: distance_matrix

@@ -1,0 +1,86 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table
+      author: EgorKulihnyh
+      changes:
+        - tagDatabase:
+            - tag: create_tables
+        - createTable:
+            tableName: city
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(500)
+              - column:
+                  name: latitude
+                  type: int
+              - column:
+                  name: longitude
+                  type: int
+
+        - createTable:
+            tableName: way
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(500)
+
+        - createTable:
+            tableName: distance
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: distance
+                  type: double
+              - column:
+                  name: id_from_city
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: distance_id_from_city_city_id
+                    references: city(id)
+                  defaultValue: -1
+              - column:
+                  name: id_to_city
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: distance_id_to_city_city_id
+                    references: city(id)
+                  defaultValue: -1
+              - column:
+                  name: id_way
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: distance_id_way_way_id
+                    references: way(id)
+                  defaultValue: -1
+
+      rollback:
+        - dropTable:
+            tableName: distance
+        - dropTable:
+            tableName: way
+        - dropTable:
+            tableName: city
